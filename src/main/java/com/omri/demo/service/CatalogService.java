@@ -26,19 +26,20 @@ public class CatalogService implements ICatalogService {
                 new BeanPropertyRowMapper<>(Catalog.class));
     }
 
-  /*  @Override
+   @Override
     public Catalog changeQuan(char sign, int amount, long item_no) {
         String sql = "UPDATE CATALOG SET amount = (amount ? ?) WHERE item_no = ?";
-        return jtm.queryForObject(sql, new Object[]{sign}, new Object[]{amount}, new Object[]{item_no},
+        return jtm.queryForObject(sql, new Object[]{sign,amount,item_no},
                 new BeanPropertyRowMapper<>(Catalog.class));
     }
 
     @Override
     public Catalog addItem(String name, int amount, int inv_code) {
         String sql = "INSERT INTO CATALOG (name, amount, inv_code) VALUES ('?', ?, ?)";
-        return jtm.query(sql, new BeanPropertyRowMapper<>(Catalog.class));
+        return jtm.queryForObject(sql, new Object[]{name,amount,inv_code},
+                new BeanPropertyRowMapper<>(Catalog.class));
 
-    } */
+    }
 
     @Override
     public Catalog deleteItem(long item_no) {
