@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-public class MyController {
+public class RESTController {
 
     @Autowired
     ICatalogService catalogService;
@@ -25,10 +25,11 @@ public class MyController {
         return catalogService.getItem(item_no);
     }
 
-    @PostMapping("/catalog")
-    public List<Catalog> addItem(@PathVariable long item_no, @PathVariable String name,
+    @PutMapping("/catalog/{name},{amount},{inv_code}")
+    public String insert(@PathVariable String name,
                                  @PathVariable int amount, @PathVariable int inv_code) {
-        return catalogService.GetCatalog();
+        catalogService.addItem(name,amount,inv_code);
+        return "{name} has been added!";
     }
 
     @PutMapping("/catalog/{item_no}")
@@ -38,8 +39,9 @@ public class MyController {
     }
 
     @DeleteMapping("/catalog/{item_no}")
-    public List<Catalog> deleteItem(@PathVariable long item_no) {
-        return catalogService.GetCatalog();
+    public String deleteFromTable(@PathVariable long item_no) {
+        catalogService.deleteItem(item_no);
+        return "item number {item_no} has been deleted!";
     }
 
 }

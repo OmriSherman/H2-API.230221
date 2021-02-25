@@ -3,11 +3,16 @@ package com.omri.demo.model;
 import java.util.Objects;
 import java.util.StringJoiner;
 
+
 public class Catalog {
     private Long item_no;
     private String name;
     private int amount;
     private int inv_code;
+
+    public Catalog() {
+
+    }
 
 
     public Catalog(String name, int amount, int inv_code) {
@@ -40,6 +45,16 @@ public class Catalog {
     public void setAmount(int amount) {
         this.amount = amount;
     }
+
+
+    public int getInv_code() {
+        return inv_code;
+    }
+
+    public void setInv_code(int inv_code) {
+        this.inv_code = inv_code;
+    }
+
 
     @Override
     public boolean equals(Object o) {

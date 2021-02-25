@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+
+import java.time.DayOfWeek;
 import java.util.List;
 
 @Service
@@ -21,30 +23,27 @@ public class CatalogService implements ICatalogService {
 
     @Override
     public Catalog getItem(long item_no) {
-        String sql = "SELECT * FROM CATALOG WHERE item_no = ?";
+        String sql = "SELECT * FROM CATALOG " + " WHERE item_no = ?";
         return jtm.queryForObject(sql, new Object[]{item_no},
                 new BeanPropertyRowMapper<>(Catalog.class));
     }
 
    @Override
-    public Catalog changeQuan(char sign, int amount, long item_no) {
-        String sql = "UPDATE CATALOG SET amount = (amount ? ?) WHERE item_no = ?";
-        return jtm.queryForObject(sql, new Object[]{sign,amount,item_no},
+    public int changeQuan(char sign, int amount, long item_no) {
+        String sql = "UPDATE CATALOG " + " SET amount = (amount ? ?)" + " WHERE item_no=?";
+        return jtm.update(sql, new Object[]{sign,amount,item_no},
                 new BeanPropertyRowMapper<>(Catalog.class));
     }
 
-    @Override
-    public Catalog addItem(String name, int amount, int inv_code) {
-        String sql = "INSERT INTO CATALOG (name, amount, inv_code) VALUES ('?', ?, ?)";
-        return jtm.queryForObject(sql, new Object[]{name,amount,inv_code},
-                new BeanPropertyRowMapper<>(Catalog.class));
+
+    public int addItem(String name, int amount, int inv_code) {
+        return jtm.update("INSERT INTO CATALOG (name, amount, inv_code) " + "VALUES (?, ?, ?)",
+                new Object[]{name, amount, inv_code});
 
     }
 
     @Override
-    public Catalog deleteItem(long item_no) {
-        String sql = "DELETE * FROM CATALOG WHERE item_no = ?";
-        return jtm.queryForObject(sql, new Object[]{item_no},
-                new BeanPropertyRowMapper<>(Catalog.class));
+    public int deleteItem(long item_no) {
+        return jtm.update("DELETE FROM CATALOG WHERE item_no=?", new Object[] {item_no});
     }
 }
