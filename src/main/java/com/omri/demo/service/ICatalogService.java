@@ -7,7 +7,7 @@ public interface ICatalogService {
 
     List<Catalog> GetCatalog();
     Catalog getItem(long item_no);
-    int changeQuan(char sign, int amount, long item_no);
+    int changeQuan(long item_no, char sign, int amount);
     int addItem(String name, int amount, int inv_code);
     int deleteItem(long item_no);
 }

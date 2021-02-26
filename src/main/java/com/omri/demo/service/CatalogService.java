@@ -29,10 +29,8 @@ public class CatalogService implements ICatalogService {
     }
 
    @Override
-    public int changeQuan(char sign, int amount, long item_no) {
-        String sql = "UPDATE CATALOG " + " SET amount = (amount ? ?)" + " WHERE item_no=?";
-        return jtm.update(sql, new Object[]{sign,amount,item_no},
-                new BeanPropertyRowMapper<>(Catalog.class));
+    public int changeQuan(long item_no, char sign, int amount) {
+        return jtm.update("UPDATE CATALOG " + "SET amount = (amount ? ?) " + "WHERE item_no=?",new Object[]{sign,amount,item_no});
     }
 
 

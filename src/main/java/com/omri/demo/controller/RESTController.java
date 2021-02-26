@@ -25,23 +25,22 @@ public class RESTController {
         return catalogService.getItem(item_no);
     }
 
-    @PutMapping("/catalog/{name},{amount},{inv_code}")
-    public String insert(@PathVariable String name,
-                                 @PathVariable int amount, @PathVariable int inv_code) {
-        catalogService.addItem(name,amount,inv_code);
-        return "{name} has been added!";
+    @PostMapping("/catalog/insert")
+    public String insert(@RequestBody Catalog catalog) {
+        catalogService.addItem(catalog.getName(),catalog.getAmount(), catalog.getInv_code());
+        return (catalog.getName() + " has been added!");
     }
-
-    @PutMapping("/catalog/{item_no}")
-    public List<Catalog> changeQuan(@PathVariable char sign,
-                                    @PathVariable int amount, @PathVariable int inv_code) {
-        return catalogService.GetCatalog();
+    //NOT WORKING
+    @PostMapping("/catalog/{item_no}/{sign}/{amount}")
+    public String changeQuantity(@PathVariable long item_no, @PathVariable char sign, @PathVariable int amount) {
+        catalogService.changeQuan(item_no,sign,amount);
+        return ("amount has been changed!");
     }
 
     @DeleteMapping("/catalog/{item_no}")
     public String deleteFromTable(@PathVariable long item_no) {
         catalogService.deleteItem(item_no);
-        return "item number {item_no} has been deleted!";
+        return "item number: " + item_no + "has been deleted from the table!";
     }
 
 }
